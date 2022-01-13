@@ -32,7 +32,7 @@ DB_PASSWORD=root
 
 ## ログファイルへの書き込み権限設定
 workspaceコンテナで以下コマンドを実行
-```chown -R www-data:www-data /var/www```
+```chown -R www-data:www-data /var/www/storage```
 ```chmod -R 777 /var/www/storage```
 
 ## 開発DB接続情報
@@ -80,3 +80,8 @@ php artisan make:model Models/Item
 # UserモデルもModelsフォルダに移動
 mv app/User.php app/Models/
 ```
+
+## nodeの準備
+workspaceコンテナで実行
+```npm install```
+```npm run dev```
