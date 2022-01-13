@@ -40,3 +40,33 @@ workspaceコンテナで以下コマンドを実行
 root  
 root  
 一旦てきとうなデータベース（スキーマ）に接続してからmelpitスキーマを作成する
+
+## ER図
+
+[dbdiagrm.io](https://dbdiagram.io/d/61dfb7a44c9a8944ec92fc72)
+```
+Table users {
+  id int [pk]
+}
+
+Table items {
+  id int [pk]
+  seller_id int [ref: > users.id]
+  buyer_id int [ref: > users.id]
+  secondary_category_id int [ref: > secondary_categories.id]
+  item_condition_id int [ref: > item_conditions.id]
+}
+
+Table item_conditions {
+  id int [pk]
+}
+
+Table primary_categories {
+  id int [pk]
+}
+
+Table secondary_categories {
+  id int [pk]
+  primary_category_id int [ref: > primary_categories.id]
+}
+```
