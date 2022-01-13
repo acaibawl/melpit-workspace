@@ -43,7 +43,7 @@ root
 
 ## ER図
 
-[dbdiagrm.io](https://dbdiagram.io/d/61dfb7a44c9a8944ec92fc72)
+[dbdiagram.io](https://dbdiagram.io/d/61dfb7a44c9a8944ec92fc72)
 ```
 Table users {
   id int [pk]
@@ -69,4 +69,14 @@ Table secondary_categories {
   id int [pk]
   primary_category_id int [ref: > primary_categories.id]
 }
+```
+
+## Eloquent Model 作成コマンド
+```
+php artisan make:model Models/PrimaryCategory
+php artisan make:model Models/SecondaryCategory
+php artisan make:model Models/ItemCondition
+php artisan make:model Models/Item
+# UserモデルもModelsフォルダに移動
+mv app/User.php app/Models/
 ```
