@@ -29,3 +29,14 @@ DB_HOST=mysql
 DB_DATABASE=melpit
 DB_PASSWORD=root
 ```
+
+## ログファイルへの書き込み権限設定
+workspaceコンテナで以下コマンドを実行
+```chown -R www-data:www-data /var/www```
+```chmod -R 777 /var/www/storage```
+
+## 開発DB接続情報
+127.0.0.1  
+root  
+root  
+一旦てきとうなデータベース（スキーマ）に接続してからmelpitスキーマを作成する
