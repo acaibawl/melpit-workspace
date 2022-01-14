@@ -65,4 +65,15 @@ class ItemsController extends Controller
         return view('items.item_detail')
             ->with('item', $item);
     }
+
+    public function showByItemForm(Item $item)
+    {
+        if (!$item->isStateSelling) {
+            // 処理を切り上げて404を返す
+            abort(404);
+        }
+
+        return view('items.item_buy_form')
+            ->with('item', $item);
+    }
 }
