@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->unsignedInteger('sales')->default(0);   // 売上金額
             $table->rememberToken();
             $table->timestamps();
         });

@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ItemsController extends Controller
 {
@@ -75,5 +80,57 @@ class ItemsController extends Controller
 
         return view('items.item_buy_form')
             ->with('item', $item);
+    }
+
+    public function buyItem(Request $request, Item $item)
+    {
+        $user = Auth::user();
+
+        if (!$item->isStateSelling) {
+            abort(404);
+        }
+
+        $token = $request->input('card-token');
+
+        try {
+            $this->settlement($item->id, $item->seller->id, $user->id, $token);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back()
+                ->with('type', 'danger')
+                ->with('message', '購入処理が失敗しました。');
+        }
+
+        return redirect()->route('item', [$item->id])
+            ->with('message', '商品を購入しました。');
+    }
+
+    private function settlement($itemID, $sellerID, $buyerID, $token)
+    {
+        // ユーザの売上金額と商品の2テーブルにまたがる更新処理なのでトランザクションを使う
+        DB::beginTransaction();
+
+        try{
+            // 処理対象の単一レコードを排他ロックしつつ取得
+            $seller = User::lockForUpdate()->find($sellerID);
+            $item = Item::lockForUpdate()->find($itemID);
+
+            if($item->isStateBought) {
+                throw new \Exception('多重決済');
+            }
+
+            $item->state = Item::STATE_BOUGHT;
+            $item->bought_at = Carbon::now();
+            $item->buyer_id = $buyerID;
+            $item->save();
+
+            $seller->sales += $item->price;
+            $seller->save();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        DB::commit();
     }
 }
