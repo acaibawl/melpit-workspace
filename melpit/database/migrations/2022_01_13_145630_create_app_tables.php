@@ -53,6 +53,7 @@ class CreateAppTables extends Migration
 
             // ここにカラムを追加していく
             $table->string('name');
+            $table->string('image_file_name');
             $table->text('description');
             $table->unsignedBigInteger('price');
             $table->string('state');
