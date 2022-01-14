@@ -85,3 +85,7 @@ mv app/User.php app/Models/
 workspaceコンテナで実行
 ```npm install```
 ```npm run dev```
+
+## 決済
+開発環境では以下のカードで動作を確認  
+[PAY.JP](https://pay.jp/docs/testcard)
