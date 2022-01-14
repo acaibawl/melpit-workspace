@@ -17,4 +17,12 @@ class ItemsController extends Controller
         return view('items.items')
             ->with('items', $items);
     }
+
+    // ルートモデルバインディングを利用。
+    // ルートパラメータからEloquent Modelをidで自動的に解決する仕組み
+    public function showItemDetail(Item $item)
+    {
+        return view('items.item_detail')
+            ->with('item', $item);
+    }
 }
