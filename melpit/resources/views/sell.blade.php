@@ -64,7 +64,11 @@
                     <div class="form-group mt-3">
                         <label for="category">カテゴリ</label>
                         <select name="category" class="custom-select form-control @error('category') is-invalid @enderror">
-                            {{-- 次のパートで実装します --}}
+                          @foreach ($conditions as $condition)
+                              <option value="{{$condition->id}}" {{old('condition') == $condition->id ? 'selected' : ''}}>
+                                  {{$condition->name}}
+                              </option>
+                          @endforeach
                         </select>
                         @error('category')
                         <span class="invalid-feedback" role="alert">
