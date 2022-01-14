@@ -15,6 +15,8 @@ class CreateAppTables extends Migration
     {
         Schema::create('primary_categories', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->integer('sort_no');
             $table->timestamps();
         });
 
@@ -23,7 +25,9 @@ class CreateAppTables extends Migration
             $table->unsignedBigInteger('primary_category_id');
 
             // ここにカラムを追加していく
-
+            $table->string('name');
+            $table->integer('sort_no');
+            
             $table->timestamps();
 
             // 外部キー制約
