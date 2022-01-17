@@ -31,9 +31,9 @@ DB_PASSWORD=root
 ```
 
 ## ログファイルへの書き込み権限設定
-workspaceコンテナで以下コマンドを実行
-```chown -R www-data:www-data /var/www/storage```
-```chmod -R 777 /var/www/storage```
+workspaceコンテナで以下コマンドを実行  
+```chown -R www-data:www-data storage```  
+```chmod -R 777 storage```
 
 ## 開発DB接続情報
 127.0.0.1  
